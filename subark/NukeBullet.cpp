@@ -1,0 +1,101 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+// "NukeBullet.cpp"
+//		NukeBullet
+//												작성자 : searer
+//												Last Update : 2000. 11. 2
+//
+////////////////////////////////////////////////////////////////////////////////
+
+/// Includes ///////////////////////////////////////////////////////////////////
+
+#include "Bullet.h"
+#include "Map.h"
+
+/// Class or functions /////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// NukeBullet::NukeBullet();
+//		NukeBullet 의 클래스
+//												작성자 : searer
+//												Last Update : 2000. 11. 2
+//
+////////////////////////////////////////////////////////////////////////////////
+
+NukeBullet::NukeBullet(int nX, int nY, int nDmg, int nSplsh) {
+	nBulletX = nX;
+	nBulletY = nY;
+	nDamage = nDmg;
+	nSplash = nSplsh;
+
+	bFalling = false;
+	nRemainTime = 120;
+	sprite.update("Resource/NukeBullet.bmp", 20, 20);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// NukeBullet::Turn();
+//		NukeBullet 의 turn
+//												작성자 : searer
+//												Last Update : 2000. 11. 2
+//
+////////////////////////////////////////////////////////////////////////////////
+
+void NukeBullet::Turn() {
+	// 투하 시간 감소
+	if (nRemainTime <= 0)
+		bFalling = true;
+	else
+		nRemainTime--;
+
+	// 터질 때
+	if (bFalling == true) {
+		// 데미지 주기
+		int i = 0;
+		int nX, nY;
+		Object **enemyList = lpmapMap->getObject();
+
+		while (i<100) {
+			if (enemyList[i] != NULL) {
+				enemyList[i]->QueryPosition(&nX, &nY);
+				if ((nBulletX-nX)*(nBulletX-nX) + (nBulletY-nY)*(nBulletY-nY)
+					<= nSplash*nSplash) {
+					enemyList[i]->Damage(nDamage);
+				}
+			}
+			i++;
+		}
+
+		// 탄환 없애기
+		lpmapMap->Delete(this);
+		delete this;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// NukeBullet::Draw();
+//		NukeBullet 의 draw
+//												작성자 : searer
+//												Last Update : 2000. 11. 2
+//
+////////////////////////////////////////////////////////////////////////////////
+
+void NukeBullet::Draw() {
+	sprite.setCurrent(nBulletX, nBulletY);
+	sprite.redraw();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// NukeBullet::Damage(int);
+//												작성자 : searer
+//												Last Update : 2000. 11. 2
+//
+////////////////////////////////////////////////////////////////////////////////
+
+void NukeBullet::Damage(int) {
+	bFalling = true;
+}

@@ -1,0 +1,2 @@
+program Running
+call trike.move with (1) !

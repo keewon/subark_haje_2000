@@ -1,0 +1,39 @@
+#ifndef _PART_QUEUE_H_
+#define _PART_QUEUE_H_
+
+/// Includes ///////////////////////////////////////////////////////////////////
+#include "Part.h"
+
+/// Defines ////////////////////////////////////////////////////////////////////
+#define MAX_PART_OBJECTS 50
+/// Class or functions /////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// class PartQueue
+//												ÀÛ¼ºÀÚ : felix
+//												Last Update : 2000. 8. 15
+//
+////////////////////////////////////////////////////////////////////////////////
+
+class PartQueue {
+	public:
+		PartQueue();
+		~PartQueue();
+
+		bool	Append(Part*);
+		Part	*ReadHeader();
+		Part	*Read();
+		bool	Delete();
+		bool	Delete(Part*);
+		bool	IsLast();
+
+	private:
+		Part	*PartsList[MAX_PART_OBJECTS];
+		int		now;
+		int		last;
+		int		read_part;
+
+};
+
+#endif	// _PART_QUEUE_H_

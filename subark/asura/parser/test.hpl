@@ -1,0 +1,18 @@
+program ProgramName;
+uses Module1, Module2;
+var
+	IntVar : int;
+	IntVar2 : int;
+
+function hello(IntVar : int) : int;
+return IntVar;
+
+procedure hello(IntVar : int);
+begin
+	assign 1 to IntVar
+end;
+
+begin
+	assign 1 to IntVar;
+	assign call hello with (IntVar) to IntVar2
+end!

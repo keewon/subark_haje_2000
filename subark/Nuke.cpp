@@ -1,0 +1,90 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+// "Nuke.cpp"
+//		Nuke
+//													작성자 : searer
+//													Last Update : 2000. 8. 21
+//
+////////////////////////////////////////////////////////////////////////////////
+
+/// Includes ///////////////////////////////////////////////////////////////////
+
+#include "Weapon.h"
+
+/// Public macros & Constants //////////////////////////////////////////////////
+
+/// Implementations ////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Nuke::Nuke();
+//		Nuke 의 생성자
+//													작성자 : searer
+//													Last Update : 2000. 8. 20
+//
+////////////////////////////////////////////////////////////////////////////////
+
+Nuke::Nuke(Explorer *lpexExp) {
+	lpexExplorer = lpexExp;
+	bFire = true;
+	bLoad = false;
+
+	nDamage = 650;
+	nSplash = 50;
+	nReloadTime = 10;
+	nRemainTime = 10;
+	nRemainAmmo = 7;
+	nShotNum = 1;
+
+	nRange = 400;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Nuke::Turn();
+//		Nuke 의 turn
+//													작성자 : searer
+//													Last Update : 2000. 8. 21
+//
+////////////////////////////////////////////////////////////////////////////////
+
+void Nuke::Turn() {
+	// 탄환 발사
+	if (bFire == true) {							// 발사 flag 체크
+		if (bLoad == true) {						// 장전 flag 체크
+//			new NukeBullet(nShotNum);
+													// 탄환 생성
+			nLoadedAmmo--;
+			if (nLoadedAmmo > 0)
+				return;
+			bLoad = false;
+			bFire = false;
+		}
+	}
+	else {
+		if (bLoad == true)
+			return;
+		else if (nRemainAmmo <= 0)
+			return;
+	}
+	// 탄환 장전
+	nRemainTime--;									// 장전 시간 감소
+	if (nRemainTime <= 0 && nRemainAmmo > 0) {
+		bLoad = true;
+		nLoadedAmmo = nShotNum;						// 연사량 만큼 장전
+		nRemainAmmo -= nShotNum;
+		nRemainTime = nReloadTime;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Nuke::Draw();
+//		Nuke 의 draw
+//													작성자 : searer
+//													Last Update : 2000. 8. 24
+//
+////////////////////////////////////////////////////////////////////////////////
+
+void Nuke::Draw() {
+}

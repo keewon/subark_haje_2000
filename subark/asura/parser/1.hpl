@@ -1,0 +1,11 @@
+program ProgramName;
+uses Module1, Module2;
+var
+
+procedure helloProcedure(IntVar : int);
+	assign 5 to IntVar;
+
+begin
+	assign 5 to IntVar3;
+	assign IntVar3 + 3 to IntVar3
+end!
